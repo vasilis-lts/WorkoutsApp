@@ -32,6 +32,23 @@ const ExercisesForm = props => {
     setFormValues(_formValues);
   };
 
+  const removeExercise = index => {
+    console.log('remove ex ' + index);
+
+    const _formValues = [...FormValues];
+    _formValues.splice(index, 1);
+
+    console.log(_formValues);
+
+    _formValues.forEach((entry, index) => {
+      entry.index = index;
+    });
+
+    console.log(_formValues);
+
+    setFormValues(_formValues);
+  };
+
   return (
     <View>
       <TouchableOpacity
@@ -55,9 +72,22 @@ const ExercisesForm = props => {
         data={FormValues}
         renderItem={({item}) => (
           <View style={styles.ExerciseItem}>
-            <Text style={{color: Colors.White, fontSize: 22}}>Name:</Text>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <Text style={{color: Colors.White, fontSize: 22}}>
+                Exercise {item.index + 1}
+              </Text>
+              <TouchableOpacity onPress={() => removeExercise(item.index)}>
+                <Text style={styles.AddExerciseBtnTxt}>X</Text>
+              </TouchableOpacity>
+            </View>
             <TextInput
               style={styles.Input}
+              value={FormValues[item.index].Name}
               onChangeText={text => handleInputChange(text, item.index, 'Name')}
               placeholder="Enter a name for the exercise"
               placeholderTextColor={Colors.Gray}
@@ -81,8 +111,6 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     borderBottomColor: '#fff',
     borderBottomWidth: 1,
-    borderTopColor: '#fff',
-    borderTopWidth: 1,
   },
   Input: {
     backgroundColor: Colors.White,
