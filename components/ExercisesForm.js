@@ -22,11 +22,7 @@ const ExercisesForm = props => {
 
   const handleInputChange = (text, index, name) => {
     const _formValues = [...FormValues];
-    console.log(text, index, name);
-
     _formValues[index][name] = text;
-
-    console.log(_formValues);
     setFormValues(_formValues);
   };
 
